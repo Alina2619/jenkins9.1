@@ -2,37 +2,40 @@ pipeline {
     agent any
 
     environment {
-        // You can define environment variables here
-        // E.g., MY_ENV_VAR = "some_value"
+        // Example: Define environment variables here
+        // Example: MY_ENV_VAR = "some_value"
     }
 
     stages {
+        // Build Stage: Compile or build your project
         stage('Build') {
             steps {
                 script {
-                    // Step to compile or build your project
                     echo 'Compiling code...'
-                    sh 'mvn clean install'  // Example for a Java Maven project
+                    // Run Maven to build the project
+                    sh 'mvn clean install'  // For Java Maven projects
                 }
             }
         }
 
+        // Test Stage: Run unit tests
         stage('Test') {
             steps {
                 script {
-                    // Step to run unit tests
                     echo 'Running tests...'
-                    sh 'mvn test'  // Running tests for Maven project
+                    // Run Maven tests
+                    sh 'mvn test'  // For Maven projects
                 }
             }
         }
 
+        // Deploy Stage: Deploy the application
         stage('Deploy') {
             steps {
                 script {
-                    // Step to deploy the application
                     echo 'Deploying application...'
-                    sh './deploy.sh'  // Running a deploy script (you can modify this based on your needs)
+                    // Run a deployment script (replace this with your actual deploy process)
+                    sh './deploy.sh'  // Replace with your custom deployment script
                 }
             }
         }
@@ -40,12 +43,16 @@ pipeline {
 
     post {
         success {
-            // Actions to take if the pipeline is successful
+            // Actions to take if the pipeline completes successfully
             echo 'Pipeline completed successfully!'
         }
         failure {
             // Actions to take if the pipeline fails
             echo 'Pipeline failed!'
+        }
+        always {
+            // Actions to take regardless of success or failure
+            echo 'Pipeline execution finished.'
         }
     }
 }
