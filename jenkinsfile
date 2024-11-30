@@ -2,7 +2,8 @@ pipeline {
     agent any
 
     environment {
-        MY_ENV_VAR = "some_value"  // Example of setting an environment variable
+        // You can define environment variables here if needed
+        // Example: MY_ENV_VAR = "some_value"
     }
 
     stages {
@@ -11,8 +12,8 @@ pipeline {
             steps {
                 script {
                     echo 'Compiling code...'
-                    // Run Maven to build the project
-                    sh 'mvn clean install'  // For Java Maven projects
+                    // Replace sh with bat for Windows
+                    bat 'mvn clean install'  // For Java Maven projects, adjust the command as needed
                 }
             }
         }
@@ -22,8 +23,8 @@ pipeline {
             steps {
                 script {
                     echo 'Running tests...'
-                    // Run Maven tests
-                    sh 'mvn test'  // For Maven projects
+                    // Replace sh with bat for Windows
+                    bat 'mvn test'  // Running tests for Maven projects
                 }
             }
         }
@@ -33,8 +34,8 @@ pipeline {
             steps {
                 script {
                     echo 'Deploying application...'
-                    // Run a deployment script (replace this with your actual deploy process)
-                    sh './deploy.sh'  // Replace with your custom deployment script
+                    // Replace sh with bat for Windows
+                    bat './deploy.bat'  // Replace with actual deployment script for Windows
                 }
             }
         }
@@ -55,4 +56,5 @@ pipeline {
         }
     }
 }
+
 
