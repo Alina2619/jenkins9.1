@@ -1,0 +1,51 @@
+pipeline {
+    agent any
+
+    environment {
+        // You can define environment variables here
+        // E.g., MY_ENV_VAR = "some_value"
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                script {
+                    // Step to compile or build your project
+                    echo 'Compiling code...'
+                    sh 'mvn clean install'  // Example for a Java Maven project
+                }
+            }
+        }
+
+        stage('Test') {
+            steps {
+                script {
+                    // Step to run unit tests
+                    echo 'Running tests...'
+                    sh 'mvn test'  // Running tests for Maven project
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                script {
+                    // Step to deploy the application
+                    echo 'Deploying application...'
+                    sh './deploy.sh'  // Running a deploy script (you can modify this based on your needs)
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            // Actions to take if the pipeline is successful
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            // Actions to take if the pipeline fails
+            echo 'Pipeline failed!'
+        }
+    }
+}
