@@ -2,32 +2,48 @@ pipeline {
     agent any
 
     stages {
-        // Build Stage: Compile or build your project
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Install Maven') {
+            steps {
+                script {
+                    // Download and extract Maven
+                    def mavenHome = "${env.WORKSPACE}/maven"
+                    sh 'curl -sL https://archive.apache.org/dist/maven/maven-3/3.8.1/binaries/apache-maven-3.8.1-bin.tar.gz | tar xz -C ${mavenHome} --strip-components=1'
+                    // Set MAVEN_HOME environment variable
+                    env.MAVEN_HOME = "${mavenHome}"
+                    env.PATH = "${mavenHome}/bin:${env.PATH}"
+                }
+            }
+        }
+
         stage('Build') {
             steps {
                 script {
                     echo 'Compiling code...'
-                    bat 'mvn clean install'  // Replace with your actual build command, e.g., 'mvn', 'gradle', etc.
+                    bat 'mvn clean install'  // Using Maven from the local directory
                 }
             }
         }
 
-        // Test Stage: Run unit tests
         stage('Test') {
             steps {
                 script {
                     echo 'Running tests...'
-                    bat 'mvn test'  // Replace with your actual test command
+                    bat 'mvn test'  // Run tests using Maven
                 }
             }
         }
 
-        // Deploy Stage: Deploy the application
         stage('Deploy') {
             steps {
                 script {
                     echo 'Deploying application...'
-                    bat './deploy.bat'  // Adjust the deployment command as necessary
+                    bat './deploy.bat'  // Or any deploy script you are using
                 }
             }
         }
@@ -40,11 +56,9 @@ pipeline {
         failure {
             echo 'Pipeline failed!'
         }
-        always {
-            echo 'Pipeline execution finished.'
-        }
     }
 }
+
 
 
 
