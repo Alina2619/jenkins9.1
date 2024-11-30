@@ -1,11 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        // You can define environment variables here if needed, e.g.
-        // MY_VAR = 'some_value'
-    }
-
     stages {
         // Build Stage: Compile or build your project
         stage('Build') {
@@ -50,6 +45,7 @@ pipeline {
         }
     }
 }
+
 
 
 
