@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        // You can define environment variables here if needed
-        // Example: MY_ENV_VAR = "some_value"
+        // You can define environment variables here if needed, e.g.
+        // MY_VAR = 'some_value'
     }
 
     stages {
@@ -12,8 +12,7 @@ pipeline {
             steps {
                 script {
                     echo 'Compiling code...'
-                    // Replace sh with bat for Windows
-                    bat 'mvn clean install'  // For Java Maven projects, adjust the command as needed
+                    bat 'mvn clean install'  // Replace with your actual build command, e.g., 'mvn', 'gradle', etc.
                 }
             }
         }
@@ -23,8 +22,7 @@ pipeline {
             steps {
                 script {
                     echo 'Running tests...'
-                    // Replace sh with bat for Windows
-                    bat 'mvn test'  // Running tests for Maven projects
+                    bat 'mvn test'  // Replace with your actual test command
                 }
             }
         }
@@ -34,8 +32,7 @@ pipeline {
             steps {
                 script {
                     echo 'Deploying application...'
-                    // Replace sh with bat for Windows
-                    bat './deploy.bat'  // Replace with actual deployment script for Windows
+                    bat './deploy.bat'  // Adjust the deployment command as necessary
                 }
             }
         }
@@ -43,18 +40,16 @@ pipeline {
 
     post {
         success {
-            // Actions to take if the pipeline completes successfully
             echo 'Pipeline completed successfully!'
         }
         failure {
-            // Actions to take if the pipeline fails
             echo 'Pipeline failed!'
         }
         always {
-            // Actions to take regardless of success or failure
             echo 'Pipeline execution finished.'
         }
     }
 }
+
 
 
